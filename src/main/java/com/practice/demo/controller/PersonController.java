@@ -70,8 +70,12 @@ public class PersonController {
 
     @DeleteMapping("/{id}")
     public Completable deletePerson(@PathVariable String id) {
-        personList.removeIf(person -> person.getId().equals(id));
-        return Completable.complete();
+
+        return Completable.fromCallable(() -> {
+            personList.removeIf(person -> person.getId().equals(id));
+            return Completable.complete();
+        });
+
     }
 
 }
